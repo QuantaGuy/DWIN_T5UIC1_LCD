@@ -1715,9 +1715,9 @@ class DWIN_LCD:
 			self.Item_Prepare_Disable(self.PREPARE_CASE_DISA)  # Disable Stepper
 		if scroll + self.PREPARE_CASE_HOME <= self.MROWS:
 			self.Item_Prepare_Home(self.PREPARE_CASE_HOME)  # Auto Home
-#		if self.pd.HAS_ZOFFSET_ITEM:
-#			if scroll + self.PREPARE_CASE_ZOFF <= self.MROWS:
-#				self.Item_Prepare_Offset(self.PREPARE_CASE_ZOFF)  # Edit Z-Offset / Babystep / Set Home Offset
+		if self.pd.HAS_ZOFFSET_ITEM:
+			if scroll + self.PREPARE_CASE_ZOFF <= self.MROWS:
+				self.Item_Prepare_Offset(self.PREPARE_CASE_ZOFF)  # Edit Z-Offset / Babystep / Set Home Offset
 		if self.pd.HAS_HOTEND:
 			if scroll + self.PREPARE_CASE_PLA <= self.MROWS:
 				self.Item_Prepare_PLA(self.PREPARE_CASE_PLA)  # Preheat PLA

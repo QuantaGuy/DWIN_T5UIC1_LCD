@@ -61,7 +61,7 @@ class HMI_value_t:
 	Move_Y_scale = 0.0
 	Move_Z_scale = 0.0
 	Move_E_scale = 0.0
-	offset_value = 0.0
+	#offset_value = 0.0
 	show_mode = 0  # -1: Temperature control    0: Printing temperature
 
 

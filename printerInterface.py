@@ -61,7 +61,7 @@ class HMI_value_t:
 	Move_Y_scale = 0.0
 	Move_Z_scale = 0.0
 	Move_E_scale = 0.0
-	#offset_value = 0.0
+	offset_value = 0.0
 	show_mode = 0  # -1: Temperature control    0: Printing temperature
 
 
@@ -241,8 +241,8 @@ class PrinterData:
 	}
 
 	material_preset = [
-		material_preset_t('PLA', 200, 60),
-		material_preset_t('ABS', 210, 100)
+		material_preset_t('PLA', 100, 60),
+		material_preset_t('ABS', 100, 70)
 	]
 	files = None
 	MACHINE_SIZE = "220x220x250"

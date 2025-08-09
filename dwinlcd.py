@@ -1338,6 +1338,10 @@ class DWIN_LCD:
 			self.pd.HMI_ValueStruct.E_Temp = self.pd.MAX_E_TEMP
 		if self.pd.HMI_ValueStruct.E_Temp < self.pd.MIN_E_TEMP:
 			self.pd.HMI_ValueStruct.E_Temp = self.pd.MIN_E_TEMP
+
+		# Added 2025-08-08 to allow the extruder (nozzle) temperature to be changed - QuantaGuy
+		self.pd.setExtTemp(self.pd.HMI_ValueStruct.E_Temp)
+
 		# E_Temp value
 		self.lcd.Draw_IntValue(
 			True, True, 0, self.lcd.font8x16, self.lcd.Color_White, self.lcd.Select_Color,
@@ -1407,6 +1411,10 @@ class DWIN_LCD:
 			self.pd.HMI_ValueStruct.Bed_Temp = self.pd.BED_MAX_TARGET
 		if self.pd.HMI_ValueStruct.Bed_Temp < self.pd.MIN_BED_TEMP:
 			self.pd.HMI_ValueStruct.Bed_Temp = self.pd.MIN_BED_TEMP
+		
+		# Added 2025-08-08 to allow the bed temperature to be changed - QuantaGuy
+		self.pd.setBedTemp(self.pd.HMI_ValueStruct.Bed_Temp)
+
 		# Bed_Temp value
 		self.lcd.Draw_IntValue(
 			True, True, 0, self.lcd.font8x16, self.lcd.Color_White, self.lcd.Select_Color,

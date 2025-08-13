@@ -269,14 +269,14 @@ class DWIN_LCD:
 	PREPARE_CASE_MOVE = 1
 	PREPARE_CASE_DISA = 2
 	PREPARE_CASE_HOME = 3
-	PREPARE_CASE_ZOFF = PREPARE_CASE_HOME + 1
-	PREPARE_CASE_PLA = PREPARE_CASE_ZOFF + 1
+	PREPARE_CASE_ZOFF = 4
+	PREPARE_CASE_PLA = 5
 	# 2025-08-08 Removing ABS preheat option.
 	#PREPARE_CASE_ABS = PREPARE_CASE_PLA + 1
 	#PREPARE_CASE_COOL = PREPARE_CASE_ABS + 1
-	PREPARE_CASE_COOL = PREPARE_CASE_PLA + 1
-	PREPARE_CASE_LANG = PREPARE_CASE_COOL + 0
-	PREPARE_CASE_TOTAL = PREPARE_CASE_LANG
+	PREPARE_CASE_COOL = 6
+	PREPARE_CASE_LANG = 7
+	PREPARE_CASE_TOTAL = 7
 
 	CONTROL_CASE_TEMP = 1
 	CONTROL_CASE_MOVE = 2
@@ -593,8 +593,8 @@ class DWIN_LCD:
 			elif self.select_prepare.now == self.PREPARE_CASE_PLA:  # PLA preheat
 				self.pd.preheat("PLA")
 
-#			elif self.select_prepare.now == self.PREPARE_CASE_ABS:  # ABS preheat
-#				self.pd.preheat("ABS")
+			elif self.select_prepare.now == self.PREPARE_CASE_ABS:  # ABS preheat
+				self.pd.preheat("ABS")
 
 			elif self.select_prepare.now == self.PREPARE_CASE_COOL:  # Cool
 				if self.pd.HAS_FAN:

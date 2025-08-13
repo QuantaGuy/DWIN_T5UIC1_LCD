@@ -193,7 +193,7 @@ class DWIN_LCD:
 	#ICON_SetHome = 30
 	ICON_SetHome = 202
 	ICON_PLAPreheat = 31
-	ICON_ABSPreheat = 32
+	#ICON_ABSPreheat = 32
 	ICON_Cool = 33
 	ICON_Language = 34
 

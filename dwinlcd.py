@@ -85,7 +85,7 @@ class DWIN_LCD:
 	select_motion = select_t()
 	select_tune = select_t()
 	select_PLA = select_t()
-#	select_ABS = select_t()
+	select_ABS = select_t()
 
 	index_file = MROWS
 	index_prepare = MROWS
@@ -189,11 +189,9 @@ class DWIN_LCD:
 	ICON_Axis = 27
 	ICON_CloseMotor = 28
 	ICON_Homing = 29
-	#Setting different icon for "Set Home Offset"
-	#ICON_SetHome = 30
-	ICON_SetHome = 202
+	ICON_SetHome = 30
 	ICON_PLAPreheat = 31
-	#ICON_ABSPreheat = 32
+	ICON_ABSPreheat = 32
 	ICON_Cool = 33
 	ICON_Language = 34
 
@@ -269,13 +267,12 @@ class DWIN_LCD:
 	PREPARE_CASE_MOVE = 1
 	PREPARE_CASE_DISA = 2
 	PREPARE_CASE_HOME = 3
-	PREPARE_CASE_ZOFF = 4
-	PREPARE_CASE_PLA = 5
-	# 2025-08-08 Removing ABS preheat option.
-	#PREPARE_CASE_ABS = PREPARE_CASE_PLA + 1
-	PREPARE_CASE_COOL = 6
-	PREPARE_CASE_LANG = 6
-	PREPARE_CASE_TOTAL = 6
+	PREPARE_CASE_ZOFF = PREPARE_CASE_HOME + 1
+	PREPARE_CASE_PLA = PREPARE_CASE_ZOFF + 1
+	PREPARE_CASE_ABS = PREPARE_CASE_PLA + 1
+	PREPARE_CASE_COOL = PREPARE_CASE_ABS + 1
+	PREPARE_CASE_LANG = PREPARE_CASE_COOL + 0
+	PREPARE_CASE_TOTAL = PREPARE_CASE_LANG
 
 	CONTROL_CASE_TEMP = 1
 	CONTROL_CASE_MOVE = 2
@@ -289,12 +286,12 @@ class DWIN_LCD:
 	TUNE_CASE_ZOFF = (TUNE_CASE_FAN + 1)
 	TUNE_CASE_TOTAL = TUNE_CASE_ZOFF
 
-	TEMP_CASE_TEMP = 1
-	TEMP_CASE_BED =2
-	TEMP_CASE_FAN = 2
-	#TEMP_CASE_PLA = 3
-	#TEMP_CASE_ABS = 4
-	TEMP_CASE_TOTAL = 2
+	TEMP_CASE_TEMP = (0 + 1)
+	TEMP_CASE_BED = (TEMP_CASE_TEMP + 1)
+	TEMP_CASE_FAN = (TEMP_CASE_BED + 0)
+	TEMP_CASE_PLA = (TEMP_CASE_FAN + 1)
+	TEMP_CASE_ABS = (TEMP_CASE_PLA + 1)
+	TEMP_CASE_TOTAL = TEMP_CASE_ABS
 
 	PREHEAT_CASE_TEMP = (0 + 1)
 	PREHEAT_CASE_BED = (PREHEAT_CASE_TEMP + 1)
@@ -509,10 +506,9 @@ class DWIN_LCD:
 					if (self.index_prepare < 7):
 						self.Draw_More_Icon(self.MROWS - self.index_prepare + 1)
 
-#					2025-08-13 Hiding ABS preheat option.
-#					if self.pd.HAS_HOTEND:
-#						if (self.index_prepare == self.PREPARE_CASE_ABS):
-#							self.Item_Prepare_ABS(self.MROWS)
+					if self.pd.HAS_HOTEND:
+						if (self.index_prepare == self.PREPARE_CASE_ABS):
+							self.Item_Prepare_ABS(self.MROWS)
 					if self.pd.HAS_PREHEAT:
 						if (self.index_prepare == self.PREPARE_CASE_COOL):
 							self.Item_Prepare_Cool(self.MROWS)
@@ -592,9 +588,8 @@ class DWIN_LCD:
 			elif self.select_prepare.now == self.PREPARE_CASE_PLA:  # PLA preheat
 				self.pd.preheat("PLA")
 
-#			2025-08-13 Hiding ABS preheat option.
-#			elif self.select_prepare.now == self.PREPARE_CASE_ABS:  # ABS preheat
-#				self.pd.preheat("ABS")
+			elif self.select_prepare.now == self.PREPARE_CASE_ABS:  # ABS preheat
+				self.pd.preheat("ABS")
 
 			elif self.select_prepare.now == self.PREPARE_CASE_COOL:  # Cool
 				if self.pd.HAS_FAN:
@@ -1343,10 +1338,6 @@ class DWIN_LCD:
 			self.pd.HMI_ValueStruct.E_Temp = self.pd.MAX_E_TEMP
 		if self.pd.HMI_ValueStruct.E_Temp < self.pd.MIN_E_TEMP:
 			self.pd.HMI_ValueStruct.E_Temp = self.pd.MIN_E_TEMP
-
-		# Added 2025-08-08 to allow the extruder (nozzle) temperature to be changed - QuantaGuy
-		self.pd.setExtTemp(self.pd.HMI_ValueStruct.E_Temp)
-
 		# E_Temp value
 		self.lcd.Draw_IntValue(
 			True, True, 0, self.lcd.font8x16, self.lcd.Color_White, self.lcd.Select_Color,
@@ -1416,10 +1407,6 @@ class DWIN_LCD:
 			self.pd.HMI_ValueStruct.Bed_Temp = self.pd.BED_MAX_TARGET
 		if self.pd.HMI_ValueStruct.Bed_Temp < self.pd.MIN_BED_TEMP:
 			self.pd.HMI_ValueStruct.Bed_Temp = self.pd.MIN_BED_TEMP
-		
-		# Added 2025-08-08 to allow the bed temperature to be changed - QuantaGuy
-		self.pd.setBedTemp(self.pd.HMI_ValueStruct.Bed_Temp)
-
 		# Bed_Temp value
 		self.lcd.Draw_IntValue(
 			True, True, 0, self.lcd.font8x16, self.lcd.Color_White, self.lcd.Select_Color,
@@ -1726,9 +1713,8 @@ class DWIN_LCD:
 		if self.pd.HAS_HOTEND:
 			if scroll + self.PREPARE_CASE_PLA <= self.MROWS:
 				self.Item_Prepare_PLA(self.PREPARE_CASE_PLA)  # Preheat PLA
-#			2025-08-13 Hiding ABS preheat option.
-#			if scroll + self.PREPARE_CASE_ABS <= self.MROWS:
-#				self.Item_Prepare_ABS(self.PREPARE_CASE_ABS)  # Preheat ABS
+			if scroll + self.PREPARE_CASE_ABS <= self.MROWS:
+				self.Item_Prepare_ABS(self.PREPARE_CASE_ABS)  # Preheat ABS
 		if self.pd.HAS_PREHEAT:
 			if scroll + self.PREPARE_CASE_COOL <= self.MROWS:
 				self.Item_Prepare_Cool(self.PREPARE_CASE_COOL)  # Cooldown
@@ -1842,13 +1828,13 @@ class DWIN_LCD:
 			self.lcd.Frame_AreaCopy(1, 1, 89, 83, 101, self.LBLX + 27, self.MBASE(self.TEMP_CASE_BED))  # ...Temperature
 		if self.pd.HAS_FAN:
 			self.lcd.Frame_AreaCopy(1, 0, 119, 64, 132, self.LBLX, self.MBASE(self.TEMP_CASE_FAN))  # Fan speed
-#		if self.pd.HAS_HOTEND:
-#			self.lcd.Frame_AreaCopy(1, 107, 76, 156, 86, self.LBLX, self.MBASE(self.TEMP_CASE_PLA))  # Preheat...
-#			self.lcd.Frame_AreaCopy(1, 157, 76, 181, 86, self.LBLX + 52, self.MBASE(self.TEMP_CASE_PLA))  # ...PLA
-#			self.lcd.Frame_AreaCopy(1, 131, 119, 182, 132, self.LBLX + 79, self.MBASE(self.TEMP_CASE_PLA))  # PLA setting
-#			self.lcd.Frame_AreaCopy(1, 107, 76, 156, 86, self.LBLX, self.MBASE(self.TEMP_CASE_ABS))  # Preheat...
-#			self.lcd.Frame_AreaCopy(1, 172, 76, 198, 86, self.LBLX + 52, self.MBASE(self.TEMP_CASE_ABS))  # ...ABS
-#			self.lcd.Frame_AreaCopy(1, 131, 119, 182, 132, self.LBLX + 81, self.MBASE(self.TEMP_CASE_ABS))  # ABS setting
+		if self.pd.HAS_HOTEND:
+			self.lcd.Frame_AreaCopy(1, 107, 76, 156, 86, self.LBLX, self.MBASE(self.TEMP_CASE_PLA))  # Preheat...
+			self.lcd.Frame_AreaCopy(1, 157, 76, 181, 86, self.LBLX + 52, self.MBASE(self.TEMP_CASE_PLA))  # ...PLA
+			self.lcd.Frame_AreaCopy(1, 131, 119, 182, 132, self.LBLX + 79, self.MBASE(self.TEMP_CASE_PLA))  # PLA setting
+			self.lcd.Frame_AreaCopy(1, 107, 76, 156, 86, self.LBLX, self.MBASE(self.TEMP_CASE_ABS))  # Preheat...
+			self.lcd.Frame_AreaCopy(1, 172, 76, 198, 86, self.LBLX + 52, self.MBASE(self.TEMP_CASE_ABS))  # ...ABS
+			self.lcd.Frame_AreaCopy(1, 131, 119, 182, 132, self.LBLX + 81, self.MBASE(self.TEMP_CASE_ABS))  # ABS setting
 
 		self.Draw_Back_First(self.select_temp.now == 0)
 		if (self.select_temp.now):
@@ -1856,38 +1842,38 @@ class DWIN_LCD:
 
 		# Draw icons and lines
 		i = 0
-#		if self.pd.HAS_HOTEND:
-#			i += 1
-#			self.Draw_Menu_Line(self.ICON_SetEndTemp + (self.TEMP_CASE_TEMP) - 1)
-#			self.lcd.Draw_IntValue(
-#				True, True, 0, self.lcd.font8x16, self.lcd.Color_White, self.lcd.Color_Bg_Black,
-#				3, 216, self.MBASE(i),
-#				self.pd.thermalManager['temp_hotend'][0]['target']
-#			)
-#		if self.pd.HAS_HEATED_BED:
-#			i += 1
-#			self.Draw_Menu_Line(self.ICON_SetEndTemp + (self.TEMP_CASE_BED) - 1)
-#			self.lcd.Draw_IntValue(
-#				True, True, 0, self.lcd.font8x16, self.lcd.Color_White, self.lcd.Color_Bg_Black,
-#				3, 216, self.MBASE(i),
-#				self.pd.thermalManager['temp_bed']['target']
-#			)
-#		if self.pd.HAS_FAN:
-#			i += 1
-#			self.Draw_Menu_Line(self.ICON_SetEndTemp + (self.TEMP_CASE_FAN) - 1)
-#			self.lcd.Draw_IntValue(
-#				True, True, 0, self.lcd.font8x16, self.lcd.Color_White, self.lcd.Color_Bg_Black,
-#				3, 216, self.MBASE(i),
-#				self.pd.thermalManager['fan_speed'][0]
-#			)
-#		if self.pd.HAS_HOTEND:
-#			# PLA/ABS items have submenus
-#			i += 1
-#			self.Draw_Menu_Line(self.ICON_SetEndTemp + (self.TEMP_CASE_PLA) - 1)
-#			self.Draw_More_Icon(i)
-#			i += 1
-#			self.Draw_Menu_Line(self.ICON_SetEndTemp + (self.TEMP_CASE_ABS) - 1)
-#			self.Draw_More_Icon(i)
+		if self.pd.HAS_HOTEND:
+			i += 1
+			self.Draw_Menu_Line(self.ICON_SetEndTemp + (self.TEMP_CASE_TEMP) - 1)
+			self.lcd.Draw_IntValue(
+				True, True, 0, self.lcd.font8x16, self.lcd.Color_White, self.lcd.Color_Bg_Black,
+				3, 216, self.MBASE(i),
+				self.pd.thermalManager['temp_hotend'][0]['target']
+			)
+		if self.pd.HAS_HEATED_BED:
+			i += 1
+			self.Draw_Menu_Line(self.ICON_SetEndTemp + (self.TEMP_CASE_BED) - 1)
+			self.lcd.Draw_IntValue(
+				True, True, 0, self.lcd.font8x16, self.lcd.Color_White, self.lcd.Color_Bg_Black,
+				3, 216, self.MBASE(i),
+				self.pd.thermalManager['temp_bed']['target']
+			)
+		if self.pd.HAS_FAN:
+			i += 1
+			self.Draw_Menu_Line(self.ICON_SetEndTemp + (self.TEMP_CASE_FAN) - 1)
+			self.lcd.Draw_IntValue(
+				True, True, 0, self.lcd.font8x16, self.lcd.Color_White, self.lcd.Color_Bg_Black,
+				3, 216, self.MBASE(i),
+				self.pd.thermalManager['fan_speed'][0]
+			)
+		if self.pd.HAS_HOTEND:
+			# PLA/ABS items have submenus
+			i += 1
+			self.Draw_Menu_Line(self.ICON_SetEndTemp + (self.TEMP_CASE_PLA) - 1)
+			self.Draw_More_Icon(i)
+			i += 1
+			self.Draw_Menu_Line(self.ICON_SetEndTemp + (self.TEMP_CASE_ABS) - 1)
+			self.Draw_More_Icon(i)
 
 	def Draw_Motion_Menu(self):
 		self.Clear_Main_Window()
@@ -2211,10 +2197,10 @@ class DWIN_LCD:
 		self.lcd.Frame_AreaCopy(1, 157, 76, 181, 86, self.LBLX + 52, self.MBASE(row))  # PLA"
 		self.Draw_Menu_Line(row, self.ICON_PLAPreheat)
 
-#	def Item_Prepare_ABS(self, row):
-#		self.lcd.Frame_AreaCopy(1, 107, 76, 156, 86, self.LBLX, self.MBASE(row))  # "Preheat"
-#		self.lcd.Frame_AreaCopy(1, 172, 76, 198, 86, self.LBLX + 52, self.MBASE(row))  # "ABS"
-#		self.Draw_Menu_Line(row, self.ICON_ABSPreheat)
+	def Item_Prepare_ABS(self, row):
+		self.lcd.Frame_AreaCopy(1, 107, 76, 156, 86, self.LBLX, self.MBASE(row))  # "Preheat"
+		self.lcd.Frame_AreaCopy(1, 172, 76, 198, 86, self.LBLX + 52, self.MBASE(row))  # "ABS"
+		self.Draw_Menu_Line(row, self.ICON_ABSPreheat)
 
 	def Item_Prepare_Cool(self, row):
 		self.lcd.Frame_AreaCopy(1, 200, 76, 264, 86, self.LBLX, self.MBASE(row))  # "Cooldown"
@@ -2287,8 +2273,8 @@ class DWIN_LCD:
 			self.HMI_Tune()
 		elif self.checkkey == self.PLAPreheat:
 			self.HMI_PLAPreheatSetting()
-#		elif self.checkkey == self.ABSPreheat:
-#			self.HMI_ABSPreheatSetting()
+		elif self.checkkey == self.ABSPreheat:
+			self.HMI_ABSPreheatSetting()
 		elif self.checkkey == self.MaxSpeed:
 			self.HMI_MaxSpeed()
 		elif self.checkkey == self.MaxAcceleration:

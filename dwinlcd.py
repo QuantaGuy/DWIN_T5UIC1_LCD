@@ -593,8 +593,8 @@ class DWIN_LCD:
 			elif self.select_prepare.now == self.PREPARE_CASE_PLA:  # PLA preheat
 				self.pd.preheat("PLA")
 
-			elif self.select_prepare.now == self.PREPARE_CASE_ABS:  # ABS preheat
-				self.pd.preheat("ABS")
+#			elif self.select_prepare.now == self.PREPARE_CASE_ABS:  # ABS preheat
+#				self.pd.preheat("ABS")
 
 			elif self.select_prepare.now == self.PREPARE_CASE_COOL:  # Cool
 				if self.pd.HAS_FAN:

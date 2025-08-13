@@ -511,9 +511,9 @@ class DWIN_LCD:
 					if (self.index_prepare < 7):
 						self.Draw_More_Icon(self.MROWS - self.index_prepare + 1)
 
-					if self.pd.HAS_HOTEND:
-						if (self.index_prepare == self.PREPARE_CASE_ABS):
-							self.Item_Prepare_ABS(self.MROWS)
+#					if self.pd.HAS_HOTEND:
+#						if (self.index_prepare == self.PREPARE_CASE_ABS):
+#							self.Item_Prepare_ABS(self.MROWS)
 					if self.pd.HAS_PREHEAT:
 						if (self.index_prepare == self.PREPARE_CASE_COOL):
 							self.Item_Prepare_Cool(self.MROWS)

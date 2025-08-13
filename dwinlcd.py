@@ -85,7 +85,7 @@ class DWIN_LCD:
 	select_motion = select_t()
 	select_tune = select_t()
 	select_PLA = select_t()
-	select_ABS = select_t()
+#	select_ABS = select_t()
 
 	index_file = MROWS
 	index_prepare = MROWS
@@ -289,12 +289,12 @@ class DWIN_LCD:
 	TUNE_CASE_ZOFF = (TUNE_CASE_FAN + 1)
 	TUNE_CASE_TOTAL = TUNE_CASE_ZOFF
 
-	TEMP_CASE_TEMP = (0 + 1)
-	TEMP_CASE_BED = (TEMP_CASE_TEMP + 1)
-	TEMP_CASE_FAN = (TEMP_CASE_BED + 0)
-	TEMP_CASE_PLA = (TEMP_CASE_FAN + 1)
-	TEMP_CASE_ABS = (TEMP_CASE_PLA + 1)
-	TEMP_CASE_TOTAL = TEMP_CASE_ABS
+	TEMP_CASE_TEMP = 1
+	TEMP_CASE_BED =2
+	TEMP_CASE_FAN = 2
+	#TEMP_CASE_PLA = 3
+	#TEMP_CASE_ABS = 4
+	TEMP_CASE_TOTAL = 2
 
 	PREHEAT_CASE_TEMP = (0 + 1)
 	PREHEAT_CASE_BED = (PREHEAT_CASE_TEMP + 1)
@@ -2211,10 +2211,10 @@ class DWIN_LCD:
 		self.lcd.Frame_AreaCopy(1, 157, 76, 181, 86, self.LBLX + 52, self.MBASE(row))  # PLA"
 		self.Draw_Menu_Line(row, self.ICON_PLAPreheat)
 
-	def Item_Prepare_ABS(self, row):
-		self.lcd.Frame_AreaCopy(1, 107, 76, 156, 86, self.LBLX, self.MBASE(row))  # "Preheat"
-		self.lcd.Frame_AreaCopy(1, 172, 76, 198, 86, self.LBLX + 52, self.MBASE(row))  # "ABS"
-		self.Draw_Menu_Line(row, self.ICON_ABSPreheat)
+#	def Item_Prepare_ABS(self, row):
+#		self.lcd.Frame_AreaCopy(1, 107, 76, 156, 86, self.LBLX, self.MBASE(row))  # "Preheat"
+#		self.lcd.Frame_AreaCopy(1, 172, 76, 198, 86, self.LBLX + 52, self.MBASE(row))  # "ABS"
+#		self.Draw_Menu_Line(row, self.ICON_ABSPreheat)
 
 	def Item_Prepare_Cool(self, row):
 		self.lcd.Frame_AreaCopy(1, 200, 76, 264, 86, self.LBLX, self.MBASE(row))  # "Cooldown"
@@ -2287,8 +2287,8 @@ class DWIN_LCD:
 			self.HMI_Tune()
 		elif self.checkkey == self.PLAPreheat:
 			self.HMI_PLAPreheatSetting()
-		elif self.checkkey == self.ABSPreheat:
-			self.HMI_ABSPreheatSetting()
+#		elif self.checkkey == self.ABSPreheat:
+#			self.HMI_ABSPreheatSetting()
 		elif self.checkkey == self.MaxSpeed:
 			self.HMI_MaxSpeed()
 		elif self.checkkey == self.MaxAcceleration:

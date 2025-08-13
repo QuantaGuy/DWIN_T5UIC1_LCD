@@ -273,7 +273,6 @@ class DWIN_LCD:
 	PREPARE_CASE_PLA = 5
 	# 2025-08-08 Removing ABS preheat option.
 	#PREPARE_CASE_ABS = PREPARE_CASE_PLA + 1
-	#PREPARE_CASE_COOL = PREPARE_CASE_ABS + 1
 	PREPARE_CASE_COOL = 6
 	PREPARE_CASE_LANG = 6
 	PREPARE_CASE_TOTAL = 6
@@ -1727,8 +1726,9 @@ class DWIN_LCD:
 		if self.pd.HAS_HOTEND:
 			if scroll + self.PREPARE_CASE_PLA <= self.MROWS:
 				self.Item_Prepare_PLA(self.PREPARE_CASE_PLA)  # Preheat PLA
-			if scroll + self.PREPARE_CASE_ABS <= self.MROWS:
-				self.Item_Prepare_ABS(self.PREPARE_CASE_ABS)  # Preheat ABS
+#			2025-08-13 Hiding ABS preheat option.
+#			if scroll + self.PREPARE_CASE_ABS <= self.MROWS:
+#				self.Item_Prepare_ABS(self.PREPARE_CASE_ABS)  # Preheat ABS
 		if self.pd.HAS_PREHEAT:
 			if scroll + self.PREPARE_CASE_COOL <= self.MROWS:
 				self.Item_Prepare_Cool(self.PREPARE_CASE_COOL)  # Cooldown
@@ -1842,13 +1842,13 @@ class DWIN_LCD:
 			self.lcd.Frame_AreaCopy(1, 1, 89, 83, 101, self.LBLX + 27, self.MBASE(self.TEMP_CASE_BED))  # ...Temperature
 		if self.pd.HAS_FAN:
 			self.lcd.Frame_AreaCopy(1, 0, 119, 64, 132, self.LBLX, self.MBASE(self.TEMP_CASE_FAN))  # Fan speed
-		if self.pd.HAS_HOTEND:
-			self.lcd.Frame_AreaCopy(1, 107, 76, 156, 86, self.LBLX, self.MBASE(self.TEMP_CASE_PLA))  # Preheat...
-			self.lcd.Frame_AreaCopy(1, 157, 76, 181, 86, self.LBLX + 52, self.MBASE(self.TEMP_CASE_PLA))  # ...PLA
-			self.lcd.Frame_AreaCopy(1, 131, 119, 182, 132, self.LBLX + 79, self.MBASE(self.TEMP_CASE_PLA))  # PLA setting
-			self.lcd.Frame_AreaCopy(1, 107, 76, 156, 86, self.LBLX, self.MBASE(self.TEMP_CASE_ABS))  # Preheat...
-			self.lcd.Frame_AreaCopy(1, 172, 76, 198, 86, self.LBLX + 52, self.MBASE(self.TEMP_CASE_ABS))  # ...ABS
-			self.lcd.Frame_AreaCopy(1, 131, 119, 182, 132, self.LBLX + 81, self.MBASE(self.TEMP_CASE_ABS))  # ABS setting
+#		if self.pd.HAS_HOTEND:
+#			self.lcd.Frame_AreaCopy(1, 107, 76, 156, 86, self.LBLX, self.MBASE(self.TEMP_CASE_PLA))  # Preheat...
+#			self.lcd.Frame_AreaCopy(1, 157, 76, 181, 86, self.LBLX + 52, self.MBASE(self.TEMP_CASE_PLA))  # ...PLA
+#			self.lcd.Frame_AreaCopy(1, 131, 119, 182, 132, self.LBLX + 79, self.MBASE(self.TEMP_CASE_PLA))  # PLA setting
+#			self.lcd.Frame_AreaCopy(1, 107, 76, 156, 86, self.LBLX, self.MBASE(self.TEMP_CASE_ABS))  # Preheat...
+#			self.lcd.Frame_AreaCopy(1, 172, 76, 198, 86, self.LBLX + 52, self.MBASE(self.TEMP_CASE_ABS))  # ...ABS
+#			self.lcd.Frame_AreaCopy(1, 131, 119, 182, 132, self.LBLX + 81, self.MBASE(self.TEMP_CASE_ABS))  # ABS setting
 
 		self.Draw_Back_First(self.select_temp.now == 0)
 		if (self.select_temp.now):

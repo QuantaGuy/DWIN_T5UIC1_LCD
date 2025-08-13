@@ -1863,7 +1863,7 @@ class DWIN_LCD:
 #				True, True, 0, self.lcd.font8x16, self.lcd.Color_White, self.lcd.Color_Bg_Black,
 #				3, 216, self.MBASE(i),
 #				self.pd.thermalManager['temp_hotend'][0]['target']
-			)
+#			)
 #		if self.pd.HAS_HEATED_BED:
 #			i += 1
 #			self.Draw_Menu_Line(self.ICON_SetEndTemp + (self.TEMP_CASE_BED) - 1)

@@ -275,8 +275,8 @@ class DWIN_LCD:
 	#PREPARE_CASE_ABS = PREPARE_CASE_PLA + 1
 	#PREPARE_CASE_COOL = PREPARE_CASE_ABS + 1
 	PREPARE_CASE_COOL = 6
-	PREPARE_CASE_LANG = 7
-	PREPARE_CASE_TOTAL = 7
+	PREPARE_CASE_LANG = 6
+	PREPARE_CASE_TOTAL = 6
 
 	CONTROL_CASE_TEMP = 1
 	CONTROL_CASE_MOVE = 2
@@ -511,6 +511,7 @@ class DWIN_LCD:
 					if (self.index_prepare < 7):
 						self.Draw_More_Icon(self.MROWS - self.index_prepare + 1)
 
+#					2025-08-13 Hiding ABS preheat option.
 #					if self.pd.HAS_HOTEND:
 #						if (self.index_prepare == self.PREPARE_CASE_ABS):
 #							self.Item_Prepare_ABS(self.MROWS)

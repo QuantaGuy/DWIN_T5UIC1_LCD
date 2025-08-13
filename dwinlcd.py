@@ -1856,38 +1856,38 @@ class DWIN_LCD:
 
 		# Draw icons and lines
 		i = 0
-		if self.pd.HAS_HOTEND:
-			i += 1
-			self.Draw_Menu_Line(self.ICON_SetEndTemp + (self.TEMP_CASE_TEMP) - 1)
-			self.lcd.Draw_IntValue(
-				True, True, 0, self.lcd.font8x16, self.lcd.Color_White, self.lcd.Color_Bg_Black,
-				3, 216, self.MBASE(i),
-				self.pd.thermalManager['temp_hotend'][0]['target']
+#		if self.pd.HAS_HOTEND:
+#			i += 1
+#			self.Draw_Menu_Line(self.ICON_SetEndTemp + (self.TEMP_CASE_TEMP) - 1)
+#			self.lcd.Draw_IntValue(
+#				True, True, 0, self.lcd.font8x16, self.lcd.Color_White, self.lcd.Color_Bg_Black,
+#				3, 216, self.MBASE(i),
+#				self.pd.thermalManager['temp_hotend'][0]['target']
 			)
-		if self.pd.HAS_HEATED_BED:
-			i += 1
-			self.Draw_Menu_Line(self.ICON_SetEndTemp + (self.TEMP_CASE_BED) - 1)
-			self.lcd.Draw_IntValue(
-				True, True, 0, self.lcd.font8x16, self.lcd.Color_White, self.lcd.Color_Bg_Black,
-				3, 216, self.MBASE(i),
-				self.pd.thermalManager['temp_bed']['target']
-			)
-		if self.pd.HAS_FAN:
-			i += 1
-			self.Draw_Menu_Line(self.ICON_SetEndTemp + (self.TEMP_CASE_FAN) - 1)
-			self.lcd.Draw_IntValue(
-				True, True, 0, self.lcd.font8x16, self.lcd.Color_White, self.lcd.Color_Bg_Black,
-				3, 216, self.MBASE(i),
-				self.pd.thermalManager['fan_speed'][0]
-			)
-		if self.pd.HAS_HOTEND:
-			# PLA/ABS items have submenus
-			i += 1
-			self.Draw_Menu_Line(self.ICON_SetEndTemp + (self.TEMP_CASE_PLA) - 1)
-			self.Draw_More_Icon(i)
-			i += 1
-			self.Draw_Menu_Line(self.ICON_SetEndTemp + (self.TEMP_CASE_ABS) - 1)
-			self.Draw_More_Icon(i)
+#		if self.pd.HAS_HEATED_BED:
+#			i += 1
+#			self.Draw_Menu_Line(self.ICON_SetEndTemp + (self.TEMP_CASE_BED) - 1)
+#			self.lcd.Draw_IntValue(
+#				True, True, 0, self.lcd.font8x16, self.lcd.Color_White, self.lcd.Color_Bg_Black,
+#				3, 216, self.MBASE(i),
+#				self.pd.thermalManager['temp_bed']['target']
+#			)
+#		if self.pd.HAS_FAN:
+#			i += 1
+#			self.Draw_Menu_Line(self.ICON_SetEndTemp + (self.TEMP_CASE_FAN) - 1)
+#			self.lcd.Draw_IntValue(
+#				True, True, 0, self.lcd.font8x16, self.lcd.Color_White, self.lcd.Color_Bg_Black,
+#				3, 216, self.MBASE(i),
+#				self.pd.thermalManager['fan_speed'][0]
+#			)
+#		if self.pd.HAS_HOTEND:
+#			# PLA/ABS items have submenus
+#			i += 1
+#			self.Draw_Menu_Line(self.ICON_SetEndTemp + (self.TEMP_CASE_PLA) - 1)
+#			self.Draw_More_Icon(i)
+#			i += 1
+#			self.Draw_Menu_Line(self.ICON_SetEndTemp + (self.TEMP_CASE_ABS) - 1)
+#			self.Draw_More_Icon(i)
 
 	def Draw_Motion_Menu(self):
 		self.Clear_Main_Window()

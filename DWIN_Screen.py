@@ -52,7 +52,7 @@ class T5UIC1_LCD:
 	DWIN_FONT_STAT = font10x20
 	DWIN_FONT_HEAD = font10x20
 
-	# DWIN serial screen initialization
+	# Dwen serial screen initialization
 	# Passing parameters: serial port number
 	# DWIN screen uses serial port 1 to send
 	def __init__(self, USARTx):

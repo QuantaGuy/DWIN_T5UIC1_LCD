@@ -240,9 +240,10 @@ class PrinterData:
 		'fan_speed': [100]
 	}
 
+	# 2025-08-24 Changed hardcoded presets. These cannot be updated in the LCD. 
 	material_preset = [
-		material_preset_t('PLA', 100, 60),
-		material_preset_t('ABS', 100, 70)
+		material_preset_t('PLA', 120, 60),
+		material_preset_t('ABS', 120, 70)
 	]
 	files = None
 	MACHINE_SIZE = "220x220x250"
@@ -465,7 +466,7 @@ class PrinterData:
 
 	def resume_job(self): #fixed
 		print('Resuming job:')
-		self.postREST('printer/print/resume', json=None)
+		self.postREST('/printer/print/resume', json=None)		#2025-08-24 Resume was not working. "/" added to beginning of path.
 
 	def set_feedrate(self, fr):
 		self.feedrate_percentage = fr

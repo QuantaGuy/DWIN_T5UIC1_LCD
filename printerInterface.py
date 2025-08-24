@@ -379,13 +379,26 @@ class PrinterData:
 		self.X_MAX_POS = int(volume[0])
 		self.Y_MAX_POS = int(volume[1])
 
-	def GetFiles(self, refresh=False):
-		if not self.files or refresh:
-			self.files = self.getREST('/server/files/list')["result"]
-		names = []
-		for fl in self.files:
-			names.append(fl["path"])
-		return names
+    #2025-08-24 New GetFiles function to return the latest prints by date. Previously the function
+	# returned too many items making selection unusable.
+	def GetFiles(self, refresh=False, newest_n=20, return_records=False):
+        if not self.files or refresh:
+            self.files = self.getREST('/server/files/list')["result"]
+			items = self.files
+            if newest_n:  # e.g., newest_n=20
+                items = sorted(items, key=lambda x: x.get("modified", 0), reverse=True)[:newest_n]
+            if return_records:
+                return items
+            return [it["path"] for it in items]  # default: list[str] of paths
+
+	#Original GetFiles function
+	#def GetFiles(self, refresh=False):
+	#	if not self.files or refresh:
+	#		self.files = self.getREST('/server/files/list')["result"]
+	#	names = []
+	#	for fl in self.files:
+	#		names.append(fl["path"])
+	#	return names
 
 	def update_variable(self):
 		query = '/printer/objects/query?extruder&heater_bed&gcode_move&fan'

@@ -382,8 +382,8 @@ class PrinterData:
     #2025-08-24 New GetFiles function to return the latest prints by date. Previously the function
 	# returned too many items making selection unusable.
 	def GetFiles(self, refresh=False, newest_n=20, return_records=False):
-        if not self.files or refresh:
-            self.files = self.getREST('/server/files/list')["result"]
+		if not self.files or refresh:
+			self.files = self.getREST('/server/files/list')["result"]
 			items = self.files
             if newest_n:  # e.g., newest_n=20
                 items = sorted(items, key=lambda x: x.get("modified", 0), reverse=True)[:newest_n]
